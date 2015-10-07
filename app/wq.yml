@@ -1,0 +1,52 @@
+# Optimize with r.js
+optimize:
+    appDir: .
+    baseUrl: js/lib
+    dir: ../htdocs-build
+    skipDirOptimize: true
+    removeCombined: true
+    modules:
+         -
+            name: "trywq"
+    paths:
+        trywq: "../trywq"
+        data: ../data
+
+# Generate AMD-wrapped JSON fixtures
+collectjson:
+     # Mustache Templates
+     -
+        paths:
+             - ../templates
+        type: html
+        output: js/data/templates.js
+        json:
+            indent: 4
+        jsonp: define
+
+# Compile jQuery Mobile themes from SCSS
+scss:
+    indir: scss
+    outdir: css
+
+# Update version.txt & JS module
+setversion:
+    filename: ../version.txt
+    jsout: js/data/version.js
+
+# Generate Application Cache manifest
+appcache:
+    name: "trywq.appcache"
+    css: "css/trywq.css"
+    css-ignore: "css/lib/images/icons-png/.*"
+    cache:
+         - js/lib/require.js
+         - css/lib/images/marker-icon.png
+         - css/lib/images/marker-icon-2x.png
+         - css/lib/images/marker-shadow.png
+         - images/empty.png
+    network:
+         - "*"
+         - "http://*"
+         - "https://*"
+    fallback: []

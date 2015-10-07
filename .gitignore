@@ -1,0 +1,6 @@
+*.pyc
+local_settings.py
+htdocs
+lib
+themes.css
+*.appcache
