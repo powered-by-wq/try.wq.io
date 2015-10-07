@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{label}}</title>
+    {{>head}}
+  </head>
+  <body>
+    <div data-role="page" class="ui-page">
+      <div data-role="header">
+        {{>home}}
+        <h1>{{label}}</h1>
+      </div>
+      <div role="main" class="ui-content">
+        <table class="ui-table table-stroke">
+          <tr>
+            <th>Observation</th>
+            <td><a href="/events/{{event_id}}">{{event_label}}</a></td>
+          </td>
+          <tr>
+          <tr>
+            <th>Reported On</th>
+            <td>{{entered_label}}</td>
+          </tr>
+          <tr>
+            <th>Reported By</th>
+            <td>{{user_label}}</td>
+          </tr>
+          {{#results}}
+          <tr>
+            <th>{{type_label}}</th>
+            <td>{{value}}</td>
+          </tr>
+          {{/results}}
+        </table>
+        {{#photo}}
+        <p style="text-align:center">
+          <img src="/media/700/{{photo}}" style="max-width:100%">
+        </p>
+        {{/photo}}
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Campaigns</title>
+    {{>head}}
+  </head>
+  <body>
+    <div data-role="page" class="ui-page">
+      <div data-role="header">
+        {{>home}}
+        <h1>Campaigns</h1>
+      </div>
+      <div role="main" class="ui-content">
+        <ul data-role="listview" data-inset="true">
+          {{#list}}
+          <li>
+            <a href="/reports/new?campaign_id={{id}}">
+              <img src="/media/{{icon}}">
+              <h3>{{label}}</h3>
+              <p>{{description}}</p>
+            </a>
+            <a href="/campaigns/{{id}}" data-icon="info">About</a>
+          </li>
+          {{/list}}
+          {{^list}}
+          <li>No Campaigns Found</li>
+          {{/list}}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+

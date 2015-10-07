@@ -18,8 +18,27 @@
     height: 500px;
 }
 .map.detail-map {
-    height: 300px;
+    height: 200px;
 }
 .map.edit-map {
-    height: 400px;
+    height: 300px;
+}
+
+li.ui-field-contain.numeric .ui-input-text {
+    width: 5em !important;
+}
+li.ui-field-contain.photo .ui-input-text {
+    width: 20em;
+    max-width: 80%;
+}
+.url-container .ui-input-text {
+    width: 10em;
+}
+.url-container .ui-input-text span {
+    margin-left: 0.3em;
+    color: #999;
+}
+.url-container .ui-input-text input {
+    display: inline;
+    width: 8em;
 }

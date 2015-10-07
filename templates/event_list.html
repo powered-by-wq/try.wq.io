@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      {{parent_label}}
+      {{^parent_label}}All{{/parent_label}}
+      Observations
+    </title>
+    {{>head}}
+  </head>
+  <body>
+    <div data-role="page" class="ui-page">
+      <div data-role="header">
+        {{>home}}
+        <h1>
+          {{parent_label}}
+          {{^parent_label}}All{{/parent_label}}
+          Observations
+        </h1>
+      </div>
+      <div role="main" class="ui-content">
+        <ul data-role="listview" data-filter="true" data-inset="true">
+          {{#list}}
+          <li>
+            <a href="/events/{{id}}">
+              {{>photo_thumbnail}}
+              <h3>{{label}}</h3>
+            </a>
+          </li>
+          {{/list}}
+          {{^list}}
+          <li>No Observations Found</li>
+          {{/list}}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+

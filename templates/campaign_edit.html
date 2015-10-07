@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{#id}}Edit{{/id}}{{^id}}Create{{/id}} Campaign</title>
+    {{>head}}
+  </head>
+  <body>
+    <div data-role="page" class="ui-page">
+      <div data-role="header">
+        {{>home}}
+        <h1>{{#id}}Edit{{/id}}{{^id}}Create{{/id}} Campaign</h1>
+      </div>
+      <div role="main" class="ui-content">
+        {{^is_authenticated}}
+        <p class="error">Please <a href="/login">Log In</a> to create a campaign.</p>
+        {{/is_authenticated}}
+        <form action="/campaigns/{{id}}" method="post" data-ajax="false"
+            data-wq-json="true" data-wq-background-sync="false">
+          {{>csrf}}
+          {{#id}}
+          <input type=hidden name="_method" value="PUT">
+          {{/id}}
+          <ul data-role="listview" data-inset="true">
+            <li class="ui-field-contain">
+              <label for="name">Name</label>
+              <input name="name" id="name" value="{{name}}">
+              <p class="error campaign-name-errors"></p>
+            </li>
+            <li class="ui-field-contain">
+              {{#icon}}
+              <img src="/media/{{icon}}">
+              {{/icon}}
+              <label for="icon">Icon</label>
+              <input type="file" id="icon" name="icon">
+              <p class="error campaign-icon-errors"></p>
+            </li>
+            {{^id}}
+            <li class="ui-field-contain url-container">
+              <label for="slug">Permalink</label>
+              <div class='ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset'>
+                <span>try.wq.io/campaigns/</span>
+                <input name="slug" id="slug" value="{{slug}}" data-role="none"
+                    placeholder="enter-here">
+              </div>
+              <p class="error campaign-slug-errors"></p>
+            </li>
+            {{/id}}
+            {{#id}}
+            <input type="hidden" name="slug" value="{{slug}}">
+            {{/id}}
+            <li class="ui-field-contain">
+              <label for="description">Description</label>
+              <textarea name="description" id="description">{{description}}</textarea>
+              <p class="error campaign-description-errors"></p>
+            </li>
+            {{#parameters}}
+            {{>parameter_inline}}
+            {{/parameters}}
+            <li>
+              <button id="add-parameter" data-icon="plus" type="button">
+                Add Field
+              </button>
+            </li>
+            <li>
+              <div class="ui-grid-a">
+                <div class="ui-block-a">
+                  <a href="/campaigns/{{id}}" data-role="button" data-icon="back" data-direction="reverse">
+                    Back
+                  </a>
+                </div>
+                <div class="ui-block-b">
+                  <button type="submit" data-icon="check" data-theme="b">
+                    Submit
+                  </button>
+                </div>
+              </div>
+              <p class="error campaign-errors"></p>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+

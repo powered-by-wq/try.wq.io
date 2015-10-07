@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{label}}</title>
+    {{>head}}
+  </head>
+  <body>
+    <div data-role="page" class="ui-page">
+      <div data-role="header">
+        {{>home}}
+        <h1>{{label}}</h1>
+        <a href="/campaigns/{{id}}/edit" data-icon="edit" data-transition="flip">
+          Edit
+        </a>
+      </div>
+      <div role="main" class="ui-content">
+        <img width=80 height=80 align=right src="/media/{{icon}}">
+        <h1>{{label}}</h1>
+        <table>
+          <tr><th>Name</th><td>{{name}}</td></tr>
+          <tr><th>Description</th><td>{{description}}</td></tr>
+        </table>
+        <table data-role="table" data-mode="columntoggle"
+               class="table-stroke ui-responsive">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th data-priority="2">Type</th>
+              <th data-priority="1">Units</th>
+              <th data-priority="3">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#parameters}}
+            <tr>
+              <th>{{name}}</th>
+              <td>
+                {{#is_numeric}}Number{{/is_numeric}}
+                {{^is_numeric}}Text{{/is_numeric}}
+              </td>
+              <td>{{units}}</td>
+              <td>{{description}}</td>
+            </tr>
+          {{/parameters}}
+          {{^parameters}}
+            <tr><td colspan=4>No custom fields.</td></tr>
+          {{/parameters}}
+          </tbody>
+        </table>
+        <ul data-role="listview" data-inset="true">
+          <li data-icon="camera">
+            <a href="/reports/new?campaign_id={{id}}">Share Observation</a>
+          </li>
+          <li data-icon="bullets">
+            <a href="/campaigns/{{id}}/events">View Observations</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+

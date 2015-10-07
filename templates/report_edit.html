@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{#id}}Edit{{/id}}{{^id}}Share{{/id}} Observation</title>
+    {{>head}}
+  </head>
+  <body>
+    <div data-role="page" class="ui-page">
+      <div data-role="header">
+        {{>home}}
+        <h1>{{#id}}Edit{{/id}}{{^id}}Share{{/id}} Observation</h1>
+      </div>
+      <div role="main" class="ui-content">
+        <!-- Note: Always POST (new), as ERAV reports are not updated directly.
+             see https://wq.io/vera -->
+        <form action="/reports/" method="post" data-ajax="false"
+            data-wq-json="true"
+            {{#outbox_id}}
+              data-wq-outbox-id="{{outbox_id}}"
+              data-wq-outbox-preserve="photo"
+            {{/outbox_id}}>
+          {{>csrf}}
+          <input type="hidden" name="event[campaign][slug]" value="{{campaign_id}}">
+          <input type="hidden" name="status[slug]" value="valid">
+          <ul data-role="listview" data-inset="true">
+            <li data-role='list-divider'>New {{#campaign}}{{label}}{{/campaign}} Observation</li>
+            <li data-role="fieldcontain">
+              <label for="date">Date</label>
+              <input type="date" name="event[date]" id="date" value="{{event.date}}{{^event.date}}{{date}}{{/event.date}}" required>
+              <p class="error report-date-errors"></p>
+            </li>
+            {{>photo_edit}}
+            <li data-role="list-divider">Location</li>
+            <li data-role="fieldcontain"{{#outbox_id}}style="display:none"{{/outbox_id}}>
+              <fieldset data-role="controlgroup">
+                <legend>Location Mode</legend>
+                <input type='radio' value='gps' id='loc-gps' name='mode'>
+                <label for='loc-gps'>GPS Lookup</label>
+                <input type='radio' value='interactive' id='loc-interactive' name='mode'>
+                <label for='loc-interactive'>Point on Map</label>
+                <input type='radio' value='manual' id='loc-manual' name='mode'
+                  {{#outbox_id}}checked{{/outbox_id}}>
+                <label for='loc-manual'>Enter Cordinates</label>
+              </fieldset>
+            </li>
+            <li data-role="fieldcontain"{{#outbox_id}}style="display:none"{{/outbox_id}}>
+              <div id="report-new-map" class="map edit-map"></div>
+            </li>
+            <li data-role="fieldcontain">
+              <label for="longitude">Longitude</label>
+              <input id="longitude" name="event[site][longitude]" value="{{event.site.longitude}}" type="tel">
+              <p class="error report-event-site-longitude-errors"></p>
+            </li>
+            <li data-role="fieldcontain">
+              <label for="latitude">Latitude</label>
+              <input id="latitude" name="event[site][latitude]" value="{{event.site.latitude}}" type="tel">
+              <p class="error report-event-site-latitude-errors"></p>
+            </li>
+            <li data-role="fieldcontain">
+              <label for="accuracy">Accuracy</label>
+              <input id="accuracy" name="accuracy" value="{{accuracy}}" type="tel">
+              <p class="error report-accuracy-errors"></p>
+            </li>
+            <li data-role="list-divider">Observations</li>
+            {{#results}}
+            {{>result_inline}}
+            {{/results}}
+            <li>
+              <div class="ui-grid-a">
+                <div class="ui-block-a">
+                  {{^id}}{{^outbox_id}}
+                  <a href="/campaigns" data-role="button"
+                     data-icon="back" data-direction="reverse">
+                    Cancel
+                  </a>
+                  {{/outbox_id}}{{/id}}
+                  {{#outbox_id}}
+                  <a href="/reports" data-role="button"
+                     data-icon="back" data-direction="reverse">
+                    Back
+                  </a>
+                  {{/outbox_id}}
+                  {{#id}}
+                  <a href="/reports/{{id}}" data-role="button"
+                     data-icon="back" data-direction="reverse">
+                    Back
+                  </a>
+                  {{/id}}
+                </div>
+                <div class="ui-block-b">
+                  <button type="submit" data-icon="check" data-theme="b">
+                    Submit
+                  </button>
+                </div>
+              </div>
+              <p class="error report-errors"></p>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{label}}</title>
+    {{>head}}
+  </head>
+  <body>
+    <div data-role="page" class="ui-page">
+      <div data-role="header">
+        {{>home}}
+        <h1>{{label}}</h1>
+      </div>
+      <div role="main" class="ui-content">
+        <div class="ui-grid-a ui-responsive">
+          <div class="ui-block-a">
+            <table>
+              <tr>
+                <th>Campaign</th>
+                <td><a href="/campaigns/{{campaign_id}}">
+                  {{campaign_label}}
+                </a></td>
+              </tr>
+              <tr>
+                <th>Location</th>
+                <td>{{site_label}}</td>
+              </th>
+              <tr>
+                <th>Date</th>
+                <td>{{date}}</td>
+              </tr>
+              {{#results}}
+              <tr>
+                <th>{{parameter}}</th>
+                <td>{{value}}</td>
+              </tr>
+              {{/results}}
+            </table>
+          </div>
+          <div class="ui-block-b">
+            <div class="map detail-map" id="event-{{id}}-map"></div>
+          </div>
+        </div>
+        <ul data-role="listview" data-inset="true">
+          <li data-role="list-divider">Reported By</li>
+          {{#valid_reports}}
+          <li>
+            <a href="/reports/{{id}}">
+              {{>photo_thumbnail}}
+              <h3>{{user_label}} at {{entered_label}}</h3>
+            </a>
+          </li>
+          {{/valid_reports}}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+

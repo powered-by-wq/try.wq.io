@@ -1,34 +1,48 @@
 <!DOCTYPE html>
-
-<!--
-NOTE: This template is only meant to provide a bootstrap to help new projects
-get up and running with wq.  Please throw this out and replace it with your own
-interesting and unique designs, styles and layouts.  The sky is the limit!
--->
 <html manifest="trywq.appcache">
   <head>
-    <title>trywq Project</title>
+    <title>Try WQ</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="images/icon-180.png" sizes="180x180">
     <link rel="manifest" href="manifest.json">
     {{>head}}
   </head>
   <body>
-    <div data-role="page" class="ui-page">
+    <div data-role="page" class="ui-page" data-wq-sync-refresh="true">
       <div data-role="header">
-        <h1>trywq Project</h1>
+        <h1>Try WQ</h1>
       </div>
       <div role="main" class="ui-content">
-        <p>Hello, world!</p>
-        <ul data-role="listview">
-          <li><a href="/login">Log In</a></li>
-          <li><a href="/places">Places</a></li>
-          <li><a href="/observations">Observations</a></li>
+        <p>
+          Welcome to <b>Try WQ</b>, the kitchen sink demo for the
+          <a href="https://wq.io/">wq Framework</a>!
+        </p>
+        <p>
+          To experiment with wq, first create a campaign and then start
+          sharing observations.  You can also contribute data to existing
+          campaigns.
+        </p>
+        <ul data-role="listview" data-inset="true">
+          <li data-icon="camera"><a href="/campaigns">Share Observation</a></li>
+          <li data-icon="edit"><a href="/campaigns/new">Create Campaign</a></li>
+          <li data-icon="{{#unsynced}}alert{{/unsynced}}{{^unsynced}}check{{/unsynced}}">
+            <a href="/reports">
+              View My Observations
+              {{#unsynced}}
+              <span class="ui-li-count">{{unsynced}}</span>
+              {{/unsynced}}
+            </a>
+          </li>
+          <li data-icon="bullets"><a href="/events">View All Observations</a></li>
+          <li data-icon="lock"><a href="/login">Account</a></li>
         </ul>
       </div>
       <div id="index-map" class="map list-map"></div>
       <p class="footer">
-        trywq v{{version}}
+        Try WQ v{{version}}
         &bull;
+        <a href="https://github.com/powered-by-wq/try.wq.io">Source Code</a>
+        <br>
         Powered by <a href="https://wq.io/">wq</a>
       </p>
     </div>

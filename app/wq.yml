@@ -5,6 +5,7 @@ optimize:
     dir: ../htdocs-build
     skipDirOptimize: true
     removeCombined: true
+    optimize: none
     modules:
          -
             name: "trywq"

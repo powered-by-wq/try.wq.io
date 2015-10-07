@@ -1,0 +1,20 @@
+<li class="ui-field-contain{{#type}}{{#is_numeric}} numeric{{/is_numeric}}{{/type}}">
+  <input type="hidden" name="results[{{@index}}][type_id]" value="{{type_id}}">
+  <label for="result-{{@index}}-value">
+    {{type_label}}
+  </label>
+  {{#type}}
+  {{#is_numeric}}
+  <input name="results[{{@index}}][value]" id="result-{{@index}}-value"
+         type="tel" value="{{value}}">
+  {{units}}
+  {{/is_numeric}}
+  {{^is_numeric}}
+  <textarea name="results[{{@index}}][value]" id="result-{{@index}}-value"
+     >{{value}}</textarea>
+  {{/is_numeric}}
+  <p class="error report-results-{{@index}}-type_id-errors"></p>
+  <p class="error report-results-{{@index}}-value-errors"></p>
+  <p>{{description}}</p>
+  {{/type}}
+</li>

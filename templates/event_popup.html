@@ -1,0 +1,17 @@
+<h3>{{label}}</h3>
+{{#photo}}
+<p style="text-align:center">
+  <img src="/media/200/{{photo}}">
+</p>
+{{/photo}}
+<table>
+  {{#results}}
+  <tr>
+    <th>{{parameter}}</th>
+    <td>{{value}} {{units}}</td>
+  </th>
+  {{/results}}
+</table>
+<p>
+  <a href="/events/{{id}}">Details</a>
+</p>

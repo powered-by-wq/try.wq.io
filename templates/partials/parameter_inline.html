@@ -1,0 +1,44 @@
+<li data-role="list-divider">
+  Field {{@index}}
+  {{#id}}
+  <input type="hidden" name="parameters[{{@index}}][id]" value="{{id}}">
+  {{/id}}
+</li>
+<li class="ui-field-contain">
+  <label for="parameter-{{@index}}-name">
+     Name
+  </label>
+  <input name="parameters[{{@index}}][name]" id="parameter-{{@index}}-name"
+         value="{{name}}">
+  <p class="error campaign-parameters-{{@index}}-name-errors"></p>
+</li>
+<li class="ui-field-contain">
+  <fieldset data-role="controlgroup" data-type="horizontal">
+    <legend>Type</legend>
+    <label for="parameter-{{@index}}-is_numeric-true">Numeric</label>
+    <input type="radio" name="parameters[{{@index}}][is_numeric]"
+           id="parameter-{{@index}}-is_numeric-true" value="t"
+          {{#is_numeric}}checked{{/is_numeric}}>
+    <label for="parameter-{{@index}}-is_numeric-false">Text</label>
+    <input type="radio" name="parameters[{{@index}}][is_numeric]"
+           id="parameter-{{@index}}-is_numeric-false" value="f"
+           {{^is_numeric}}checked{{/is_numeric}}>
+  </fieldset>
+  <p class="error campaign-parameters-{{@index}}-is_numeric-errors"></p>
+</li>
+<li class="ui-field-contain">
+  <label for="parameters-{{@index}}-units">
+     Units
+  </label>
+  <input name="parameters[{{@index}}][units]" id="parameter-{{@index}}-units"
+         value="{{units}}">
+  <p class="error campaign-parameters-{{@index}}-units-errors"></p>
+</li>
+<li class="ui-field-contain">
+  <label for="parameters-{{@index}}-description">
+     Description
+  </label>
+  <textarea name="parameters[{{@index}}][description]" id="parameter-{{@index}}-description"
+    >{{description}}</textarea>
+  <p class="error campaign-parameters-{{@index}}-description-errors"></p>
+</li>

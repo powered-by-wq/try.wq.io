@@ -29,8 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
 
-    # Uncomment to enable python-social-auth
-    # 'social.apps.django_app.default',
+    'social.apps.django_app.default',
 
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -41,12 +40,18 @@ INSTALLED_APPS = (
     'rest_framework',
 
     'wq.db.patterns.identify',
-    'wq.db.patterns.locate',
+    'wq.db.patterns.relate',
     'wq.db.rest',
     'wq.db.rest.auth',
 
-    'exampleapp',
+    'vera',
+    'campaigns',
 )
+
+WQ_EVENT_MODEL = 'campaigns.Event'
+WQ_REPORT_MODEL = 'campaigns.Report'
+WQ_PARAMETER_MODEL = 'campaigns.Parameter'
+WQ_EVENTRESULT_MODEL = 'campaigns.EventResult'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,6 +70,7 @@ from wq.db.default_settings import (
     REST_FRAMEWORK,
     SOCIAL_AUTH_PIPELINE,
 )
+REST_FRAMEWORK['UPLOADED_FILES_USE_URL'] = False
 
 # wq: Recommended settings unique to wq.db
 from wq.db.default_settings import (
@@ -76,7 +82,9 @@ from wq.db.default_settings import (
 
 # wq: Social auth (see http://psa.matiasaguirre.net/docs/backends/)
 AUTHENTICATION_BACKENDS = (
-    # 'social.backends.google.GoogleOpenId',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -117,6 +125,7 @@ MEDIA_URL = '/media/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
+LOGIN_REDIRECT_URL = '/login'
 
 # wq: Import local settings
 try:

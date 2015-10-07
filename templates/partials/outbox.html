@@ -9,7 +9,12 @@
     {{^photo}}
     <img src="{{rt}}/images/empty.png" alt="No Image">
     {{/photo}}
-    Observation on {{date}}
+    {{#campaign}}
+    {{label}}
+    {{/campaign}}
+    {{^campaign}}{{campaign_id}}{{/campaign}}
+    Observation
+    on {{date}}
     {{/data}}
   </a>
 </li>
