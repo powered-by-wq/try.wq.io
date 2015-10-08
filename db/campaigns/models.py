@@ -1,6 +1,7 @@
 from django.db import models
 from wq.db.patterns import models as patterns
 from vera import models as vera
+import reversion
 
 
 class Campaign(patterns.NaturalKeyModel):
@@ -54,14 +55,6 @@ class Parameter(vera.BaseParameter):
     #   is_numeric = models.BooleanField()
     #   units = models.CharField()
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if not self.primary_identifier:
-            self.identifiers.create(
-                name=self.name,
-                is_primary=True,
-            )
-
     class Meta:
         ordering = ['pk']
 
@@ -72,3 +65,7 @@ class Parameter(vera.BaseParameter):
 #    vera.Result
 
 EventResult = vera.create_eventresult_model(Event, vera.Result)
+
+reversion.register(patterns.Identifier)
+reversion.register(Parameter, follow=['identifiers'])
+reversion.register(Campaign, follow=['parameters'])

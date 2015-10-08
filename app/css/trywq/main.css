@@ -26,6 +26,9 @@
 
 li.ui-field-contain.numeric .ui-input-text {
     width: 5em !important;
+    float: none;
+    vertical-align: middle;
+    display: inline-block;
 }
 li.ui-field-contain.photo .ui-input-text {
     width: 20em;

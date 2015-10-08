@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 # wq: SECRET_KEY, DEBUG and TEMPLATE_DEBUG are defined in local_settings.py
 
-ALLOWED_HOSTS = ["trywq"]
+ALLOWED_HOSTS = ["try.wq.io"]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 
     'rest_framework',
+    'reversion',
 
     'wq.db.patterns.identify',
     'wq.db.patterns.relate',
@@ -54,6 +55,7 @@ WQ_PARAMETER_MODEL = 'campaigns.Parameter'
 WQ_EVENTRESULT_MODEL = 'campaigns.EventResult'
 
 MIDDLEWARE_CLASSES = (
+     'reversion.middleware.RevisionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

@@ -7,7 +7,14 @@ from vera.serializers import EventResultSerializer
 
 class ParameterInlineSerializer(patterns.AttachmentSerializer,
                                 patterns.IdentifiedModelSerializer):
+    id = serializers.CharField(required=False)
     object_field = 'campaign'
+
+    def to_representation(self, obj):
+        data = super().to_representation(obj)
+        if obj.primary_identifier:
+            data['id'] = obj.primary_identifier.slug
+        return data
 
     class Meta:
         model = Parameter
@@ -18,6 +25,17 @@ class ParameterInlineSerializer(patterns.AttachmentSerializer,
 class CampaignSerializer(patterns.AttachedModelSerializer):
     parameters = ParameterInlineSerializer(many=True, required=False)
     icon = serializers.FileField(required=False)
+
+    def get_attachment(self, model, pk):
+        return model.objects.get_by_identifier(pk)
+
+    def create_attachment(self, model, attachment, name):
+        instance = super().create_attachment(model, attachment, name)
+        instance.identifiers.create(
+            name=instance.name,
+            is_primary=True,
+        )
+        return instance
 
 
 class EventSerializer(ModelSerializer):

@@ -15,7 +15,12 @@
           {{#list}}
           <li>
             <a href="/reports/new?campaign_id={{id}}">
+              {{#icon}}
               <img src="/media/{{icon}}">
+              {{/icon}}
+              {{^icon}}
+              <img src="/images/empty.png">
+              {{/icon}}
               <h3>{{label}}</h3>
               <p>{{description}}</p>
             </a>
