@@ -61,12 +61,16 @@ class ObservationSerializer(patterns.AttachedModelSerializer):
         list_exclude = ('results',)
 ```
 
-vera automatically registers its associated models with [wq.db's router][router], even if the models have been extended with custom versions.  For that reason, Try WQ's [rest.py] includes a number of calls to `update_config()` and related methods rather than to `register_model()`.  If you weren't using vera, these could be regular calls to `router.register_model()`.
+A number of important [configuration options][config] are set when each model is registered in [rest.py].  vera automatically registers its associated models with [wq.db's router][router], even if the models have been extended with custom versions.  For that reason, Try WQ's [rest.py] includes a number of calls to `update_config()` and related methods rather than to `register_model()`.  If you weren't using vera, these could be regular calls to `router.register_model()`.
 
 ```python
 rest.router.register_model(
     Observation,
     serializer=ObservationSerializer,
+    filter=observation_filter,
+    partial=True,
+    reversed=True,
+
     has_results=True,
 )
 ```
@@ -103,7 +107,7 @@ config.attachmentTypes.result = {
 
 The [report edit template][report_edit] would likely be useful as a starting point for a combined `observation_edit` template.  The main caveat is that the ERAV model assumes that report instances are only created and never updated directly.  (The way to "edit" a report/event in ERAV is to create a new report that "masks" the old values).  An observation_edit template would need to support editing both new and existing records.  The default [observation edit template][observation_edit] in the new [`wq start`][wq start] template is set up this way.
 
-The report/event distinction is used in Try WQ to support a common wq use case: making it so a user can edit their own records when offline, but can also view records by other people when online.  In Try WQ, the `Event` model is [configured][rest.py] in such a way to make sure that it is always rendered on the server, to avoid taking up offline storage space.  By contrast, the `Report` model is [configured](rest.py) to download and persist records entered by the user in offline storage, while also allowing for viewing `Report`s from other users (by going to an `Event` and then clicking one of the associated `Report`s.  The `Report` model [templates][report_edit] are also set up to use background syncing via the [outbox], versus the `Campaign` model which is explicitly [set to sync in the foreground][campaign_edit] more like a traditional `<form>`.
+The report/event distinction is used in Try WQ to support a common wq use case: making it so a user can edit their own records when offline, but can also view records by other people when online.  In Try WQ, the `Event` model is [configured][rest.py] in such a way to make sure that it is always rendered on the server, to avoid taking up offline storage space.  By contrast, the `Report` model is [configured][rest.py] to download and persist records entered by the user in offline storage, while also allowing for viewing `Report`s from other users (by going to an `Event` and then clicking one of the associated `Report`s.  The `Report` model [templates][report_edit] are also set up to use background syncing via the [outbox], versus the `Campaign` model which is explicitly [set to sync in the foreground][campaign_edit] more like a traditional `<form>`.
 
 This workflow could be implemented in a combined `Observation` model by configuring it like the `Report` model is [configured][rest.py] in Try WQ: JSON version only includes user's data; HTML (server-rendered) version includes everyones data.  The existing `report_edit`, `report_detail` and `report_list` templates would largely be useful as-is (other than the field names).  The main trick would be getting the `observations/` screen to show all entered records, since by default it would be rendered on the client and only show the user's locally stored records.  One trick would be to append a short meaningless parameter to the URL (e.g. `observations/?_=1` to trick [wq/app.js] into thinking it doesn't know how to handle the page (in which case it will automatically fall back to loading it from the server).  The [index template][index] might then look something like this:
 
@@ -137,6 +141,7 @@ This workflow could be implemented in a combined `Observation` model by configur
 [router]: https://wq.io/docs/router
 [issue-38]: https://github.com/wq/wq.app/issues/38
 [outbox]: https://wq.io/docs/outbox-js
+[config]: https://wq.io/docs/config
 
 [serializers.py]: https://github.com/powered-by-wq/try.wq.io/blob/master/db/campaigns/serializers.py
 [campaign_edit]: https://github.com/powered-by-wq/try.wq.io/blob/master/templates/campaign_edit.html
