@@ -22,7 +22,7 @@
           {{/id}}
           <ul data-role="listview" data-inset="true">
             <li class="ui-field-contain">
-              <label for="name">Name</label>
+              <label for="name">Campaign Name</label>
               <input name="name" id="name" value="{{name}}">
               <p class="error campaign-name-errors"></p>
             </li>
@@ -52,6 +52,11 @@
               <label for="description">Description</label>
               <textarea name="description" id="description">{{description}}</textarea>
               <p class="error campaign-description-errors"></p>
+            </li>
+            <li data-role="list-divider">Observation Fields</li>
+              <li>Date</li>
+              <li>Photo</li>
+              <li>Location (Latitude, Longitude)</li>
             </li>
             {{#parameters}}
             {{>parameter_inline}}

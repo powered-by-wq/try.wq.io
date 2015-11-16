@@ -8,7 +8,7 @@ return {
         }
         jqm.activePage.find('button#add-parameter').click(function() {
             var $param = $(tmpl.render("{{>parameter_inline}}", {
-                '@index': $.mobile.activePage.find('li.ui-li-divider').length
+                '@index': $.mobile.activePage.find('li.parameter').length
             }));
             $(this).parents('li').before($param);
             $param.enhanceWithin();
