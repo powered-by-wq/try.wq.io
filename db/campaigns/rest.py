@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 def no_json_filter(qs, request):
-    if request.accepted_renderer.format == 'json':
+    if request.accepted_renderer.format == 'json' and request.path.count('/') < 2:
         return qs.none()
     return qs
 
