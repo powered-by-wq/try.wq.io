@@ -1,24 +1,30 @@
-mqcdn = "https://otile{s}-s.mqcdn.com/tiles/1.0.0/{layer}/{z}/{x}/{y}.png"
+from django.conf import settings
 
-# _attribution (https://gist.github.com/mourner/1804938)
-osm_attr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-aerial_attr = 'Imagery &copy; NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
-mq_tiles_attr = 'Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="https://developer.mapquest.com/content/osm/mq_logo.png" />'
+mapbox = "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"
+
+attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 
 basemaps = [{
     'name': "Street",
     'type': 'tile',
-    'url': mqcdn,
-    'subdomains': '1234',
-    'layer': 'map',
-    'attribution': osm_attr + ', ' + mq_tiles_attr
+    'url': mapbox,
+    'id': 'mapbox.streets',
+    'accessToken': settings.MAPBOX_TOKEN,
+    'attribution': attrib,
+}, {
+    'name': "Terrain",
+    'type': 'tile',
+    'url': mapbox,
+    'id': 'mapbox.outdoors',
+    'accessToken': settings.MAPBOX_TOKEN,
+    'attribution': attrib,
 }, {
     'name': "Aerial",
     'type': 'tile',
-    'url': mqcdn,
-    'subdomains': '1234',
-    'layer': 'sat',
-    'attribution': aerial_attr + ', ' + mq_tiles_attr
+    'url': mapbox,
+    'id': 'mapbox.satellite',
+    'accessToken': settings.MAPBOX_TOKEN,
+    'attribution': attrib,
 }]
 
 event_list = {
