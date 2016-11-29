@@ -4,3 +4,4 @@ htdocs
 lib
 themes.css
 *.appcache
+venv

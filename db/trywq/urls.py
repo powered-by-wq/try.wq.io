@@ -1,13 +1,28 @@
-from django.conf.urls import patterns, include, url
-
-from django.contrib import admin
-admin.autodiscover()
+import os
+from django.conf.urls.static import static
+from django.conf.urls import include, url
 
 from wq.db import rest
 rest.autodiscover()
 
-urlpatterns = patterns('',
+from django.conf import settings
+
+urlpatterns = [
     url(r'^generate/', include('dmt.urls')),
+
     url(r'', include('social.apps.django_app.urls', namespace='social')),
+
     url(r'^', include(rest.router.urls))
-)
+]
+
+if settings.DEBUG_WITH_RUNSERVER:
+
+    # To use django-media-thumbnailer
+    # urlpatterns.append(url('^media/', include('dmt.urls')))
+
+    urlpatterns += static('/media/', document_root=settings.MEDIA_ROOT)
+
+    # after building...
+    urlpatterns += static(
+        '/', document_root=os.path.join(settings.BASE_DIR, 'htdocs')
+    )

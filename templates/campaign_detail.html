@@ -21,6 +21,9 @@
         <table>
           <tr><th>Name</th><td>{{name}}</td></tr>
           <tr><th>Description</th><td>{{description}}</td></tr>
+          {{#creator_label}}
+          <tr><th>Created By</th><td>{{creator_label}}</td></tr>
+          {{/creator_label}}
         </table>
         <table data-role="table" data-mode="columntoggle"
                class="table-stroke ui-responsive">

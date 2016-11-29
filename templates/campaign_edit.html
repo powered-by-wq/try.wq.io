@@ -22,16 +22,17 @@
           {{/id}}
           <ul data-role="listview" data-inset="true">
             <li class="ui-field-contain">
-              <label for="name">Campaign Name</label>
-              <input name="name" id="name" value="{{name}}">
-              <p class="error campaign-name-errors"></p>
+              <label for='campaign-name'>Campaign Name</label>
+              <input id='campaign-name' type='text' data-xform-type='string' name='name' re
+uired value="{{name}}">
+              <p class='error campaign-name-errors'></p>
             </li>
             <li class="ui-field-contain">
-              {{#icon}}
-              <img src="/media/{{icon}}">
-              {{/icon}}
-              <label for="icon">Icon</label>
-              <input type="file" id="icon" name="icon">
+              <img src="{{rt}}{{#icon}}/media/{{icon}}{{/icon}}{{^icon}}/images/empty.png{{/icon}}"
+                   id="campaign-icon-preview">
+              <label for="campaign-icon">Icon</label>
+              <input type="file" name="icon" id="campaign-icon"
+                     data-wq-preview="campaign-icon-preview">
               <p class="error campaign-icon-errors"></p>
             </li>
             {{^id}}
@@ -49,8 +50,8 @@
             <input type="hidden" name="slug" value="{{slug}}">
             {{/id}}
             <li class="ui-field-contain">
-              <label for="description">Description</label>
-              <textarea name="description" id="description">{{description}}</textarea>
+              <label for='campaign-description'>Description</label>
+              <textarea name="description" id="campaign-description">{{description}}</textarea>
               <p class="error campaign-description-errors"></p>
             </li>
             <li data-role="list-divider">Observation Fields</li>
@@ -59,17 +60,51 @@
               <li>Location (Latitude, Longitude)</li>
             </li>
             {{#parameters}}
-            {{>parameter_inline}}
+            <li class="section-parameters" data-role="list-divider">
+              Field {{@index}}
+              {{^new}}
+              <input type="hidden" name="parameters[{{@index}}][id]" value="{{id}}">
+              {{/new}}
+            </li>
+            <li class="ui-field-contain">
+              <label for='campaign-parameters-{{@index}}-name'>Name</label>
+              <input id='campaign-parameters-{{@index}}-name' type='text' data-xform-type='string' name='parameters[{{@index}}][name]' value="{{^new}}{{name}}{{/new}}">
+              <p class='error campaign-parameters-{{@index}}-name-errors'></p>
+            </li>
+            <li class="ui-field-contain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Type</legend>
+                <label for="parameter-{{@index}}-is_numeric-true">Numeric</label>
+                <input type="radio" name="parameters[{{@index}}][is_numeric]"
+                     id="parameter-{{@index}}-is_numeric-true" value="t"
+                    {{#is_numeric}}checked{{/is_numeric}}>
+                <label for="parameter-{{@index}}-is_numeric-false">Text</label>
+                <input type="radio" name="parameters[{{@index}}][is_numeric]"
+                     id="parameter-{{@index}}-is_numeric-false" value="f"
+                     {{^is_numeric}}checked{{/is_numeric}}>
+              </fieldset>
+              <p class="error campaign-parameters-{{@index}}-is_numeric-errors"></p>
+            </li>
+            <li class="ui-field-contain">
+              <label for='campaign-parameters-{{@index}}-units'>Units</label>
+              <input id='campaign-parameters-{{@index}}-units' type='text' data-xform-type='string' name='parameters[{{@index}}][units]' value="{{units}}">
+              <p class='error campaign-parameters-{{@index}}-units-errors'></p>
+            </li>
+            <li class="ui-field-contain">
+              <label for='campaign-parameters-{{@index}}-description'>Description</label>
+              <input id='campaign-parameters-{{@index}}-description' type='text' data-xform-type='string' name='parameters[{{@index}}][description]' required value="{{^new}}{{description}}{{/new}}">
+              <p class='error campaign-parameters-{{@index}}-description-errors'></p>
+            </li>
             {{/parameters}}
             <li>
-              <button id="add-parameter" data-icon="plus" type="button">
+              <button type="button" data-wq-action="addattachment" data-wq-section="parameters">
                 Add Field
               </button>
             </li>
             <li>
               <div class="ui-grid-a">
                 <div class="ui-block-a">
-                  <a href="/campaigns/{{id}}" data-role="button" data-icon="back" data-direction="reverse">
+                  <a href="{{rt}}/campaigns/{{id}}" data-role="button" data-icon="back" data-direction="reverse">
                     Back
                   </a>
                 </div>
@@ -87,4 +122,3 @@
     </div>
   </body>
 </html>
-

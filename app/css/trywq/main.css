@@ -18,10 +18,17 @@
     height: 500px;
 }
 .map.detail-map {
-    height: 200px;
+    height: 300px;
 }
 .map.edit-map {
-    height: 300px;
+    height: 400px;
+}
+
+.ui-content .ui-grid-a .ui-block-a {
+    padding-right: 0.5em;
+}
+.ui-content .ui-grid-a .ui-block-b {
+    padding-left: 0.5em;
 }
 
 li.ui-field-contain.numeric .ui-input-text {

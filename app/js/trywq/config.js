@@ -1,19 +1,6 @@
 define(["data/config", "data/templates", "data/version"],
 function(config, templates, version) {
 
-// FIXME: See https://github.com/wq/wq.app/issues/38
-var rconf = config.attachmentTypes.result;
-rconf.getTypeFilter = function(page, context) {
-    return {'campaign_id': context.campaign_id}
-};
-rconf.getDefaults = function(type, context) {
-    return {
-        'type_id': type.id,
-        'type_label': type.name,
-        'type': type
-    };
-};
-
 config.router = {
     'base_url': ''
 }
@@ -22,6 +9,10 @@ config.template = {
     'templates': templates,
     'defaults': {
         'version': version,
+        'new': function() {
+	    // FIXME: See https://github.com/wq/wq.app/issues/72
+            return ('wq_config' in this);
+        },
         'date': function() {
             var date = new Date();
             return (

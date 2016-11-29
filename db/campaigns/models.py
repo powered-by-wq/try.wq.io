@@ -1,14 +1,16 @@
 from django.db import models
 from wq.db.patterns import models as patterns
-from vera import models as vera
+from vera import base_models as vera
+from natural_keys import NaturalKeyModel
 import reversion
 
 
-class Campaign(patterns.NaturalKeyModel):
+class Campaign(NaturalKeyModel):
     slug = models.SlugField()
     name = models.CharField(max_length=255)
     icon = models.ImageField(upload_to='campaigns')
     description = models.TextField()
+    creator = models.ForeignKey("auth.User", null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -21,7 +23,7 @@ class Event(vera.BaseEvent):
     date = models.DateField()
     campaign = models.ForeignKey(Campaign)
 
-    # Inherited from vera.BaseEvent:
+    # Inherited from vera's series.BaseEvent:
     #   site = models.ForeignKey('vera.Site')
 
     def __str__(self):
@@ -39,7 +41,7 @@ class Report(vera.BaseReport):
         null=True, blank=True, upload_to='reports'
     )
 
-    # Inherited from vera.BaseReport:
+    # Inherited from vera's series.BaseReport:
     #   event = models.ForeignKey(Event)
     #   entered = models.DateTimeField()
     #   user = models.ForeignKey('auth.User')
@@ -50,8 +52,9 @@ class Parameter(vera.BaseParameter):
     campaign = models.ForeignKey(Campaign, related_name='parameters')
     description = models.TextField()
 
-    # Inherited from vera.BaseParameter:
+    # Inherited from vera's params.BaseParameter:
     #   name = models.CharField()
+    #   slug = models.CharField()
     #   is_numeric = models.BooleanField()
     #   units = models.CharField()
 
@@ -60,9 +63,9 @@ class Parameter(vera.BaseParameter):
 
 
 # Other vera models (not overridden in this project):
-#    vera.Site
-#    vera.ReportStatus
-#    vera.Result
+#    params.Site
+#    params.ReportStatus
+#    results.Result
 
 EventResult = vera.create_eventresult_model(Event, vera.Result)
 

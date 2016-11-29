@@ -42,16 +42,13 @@ event_detail = {
 }
 
 index_map = {
-    'defaults': {
-        'layers': [event_list]
-    }
+    'layers': [event_list]
 }
 
-event_map = {
-    'list': {
-        'layers': [event_list]
-    },
-    'detail': {
-        'layers': [event_detail]
-    }
-}
+event_map = [{
+    'mode': 'list',
+    'layers': [event_list],
+}, {
+    'mode': 'detail',
+    'layers': [event_detail],
+}]
